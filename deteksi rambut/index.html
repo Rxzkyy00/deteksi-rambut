@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Deteksi Tipe Rambut</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>Deteksi Tipe Rambut</h1>
+      <p>Gunakan kamera atau upload foto untuk mendeteksi tipe rambut</p>
+    </div>
+
+    <!-- Tab -->
+    <div class="tab-bar">
+      <button class="tab active" onclick="switchTab('kamera')">📷 Kamera</button>
+      <button class="tab" onclick="switchTab('upload')">🖼️ Upload Foto</button>
+    </div>
+
+    <!-- Tab Kamera -->
+    <div id="tab-kamera" class="tab-content">
+      <div class="camera-box">
+        <video id="webcam" autoplay playsinline></video>
+        <div class="camera-overlay" id="cameraOverlay">
+          <span>📷 Klik "Mulai Kamera"</span>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button class="btn-primary" id="btnStart" onclick="startWebcam()">📷 Mulai Kamera</button>
+        <button class="btn-danger" id="btnStop" style="display:none" onclick="stopKamera()">⛔ Stop</button>
+      </div>
+    </div>
+
+    <!-- Tab Upload -->
+    <div id="tab-upload" class="tab-content" style="display:none">
+      <div class="upload-box" onclick="document.getElementById('fileInput').click()">
+        <input type="file" id="fileInput" accept="image/*" onchange="handleUpload(event)" style="display:none"/>
+        <div id="uploadPlaceholder">
+          <span class="upload-icon">📁</span>
+          <p>Klik untuk upload foto</p>
+          <small>JPG, PNG, WEBP</small>
+        </div>
+        <img id="previewImg" style="display:none"/>
+      </div>
+      <div class="btn-group">
+        <button class="btn-primary" id="btnDetect" style="display:none" onclick="deteksiGambar()">Deteksi Sekarang</button>
+        <button class="btn-secondary" id="btnClear" style="display:none" onclick="clearImage()">Hapus</button>
+      </div>
+    </div>
+
+    <!-- Hasil -->
+    <div class="result-box" id="resultBox" style="display:none">
+      <div class="result-header">
+        <span id="resultEmoji">💇</span>
+        <div>
+          <p class="result-label">Tipe Rambut Terdeteksi</p>
+          <p class="result-name" id="resultName">-</p>
+        </div>
+        <span class="result-pct" id="resultPct">0%</span>
+      </div>
+      <div class="result-desc" id="resultDesc"></div>
+      <div class="bar-container" id="barContainer"></div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" id="loadingBox">
+      <div class="spinner"></div>
+      <p id="loadingText">Memuat model AI...</p>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
